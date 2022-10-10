@@ -1,0 +1,48 @@
+$font-family-bold: "OpenSans-Bold";
+$font-family-extra-bold: "OpenSans-Extra-Bold";
+$font-family-light: "OpenSans-Light";
+$font-family-medium: "OpenSans-Medium";
+$font-family-regular: "OpenSans-Regular";
+$font-family-semi-bold: "OpenSans-Semi-Bold";
+
+.headerContainer {
+  background: #000000;
+  height: 100px;
+  color: azure;
+  display: flex;
+  gap: 50%;
+
+  .homeTab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    font-family: $font-family-bold;
+    font-size: 25px;
+  }
+  .tabsContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: $font-family-medium;
+    font-size: 18px;
+    a {
+      text-decoration: none;
+    }
+    .tabs {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      color: azure;
+      padding: 10px;
+      &:hover {
+        background-color: rgba(123, 201, 123, 0.8);
+        transition: 0.5s;
+      }
+    }
+    .vl {
+      border-left: 1px solid darkslategray;
+      height: 100px;
+    }
+  }
+}
