@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router";
+
 // eslint-disable-next-line no-restricted-imports
 import "./App.css";
 import AuthLayout from "./layout/AuthLayout";

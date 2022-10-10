@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "./Header";
 
 interface Props {
   children: React.ReactNode;
@@ -8,7 +7,7 @@ interface Props {
 const AuthLayout: React.FC<Props> = ({ children }) => {
   return (
     <div>
-      <Header />
+      <p>Auth Layout</p>
       {children}
     </div>
   );

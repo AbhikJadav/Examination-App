@@ -11,7 +11,7 @@ const Home = () => {
   console.log("user", user);
 
   const handleRedirect = () => {
-    navigate("/login");
+    navigate("/signin");
   };
   return (
     <div>
