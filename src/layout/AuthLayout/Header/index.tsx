@@ -1,9 +1,10 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import style from "./Header.module.scss";
 import { tabs } from "./tabs";
 
 const Header = () => {
+  const location = useLocation();
   return (
     <div>
       <div className={style.headerContainer}>
@@ -16,7 +17,11 @@ const Header = () => {
               <>
                 <NavLink
                   to={tabs.redirectTo}
-                  // className={style.tabs}
+                  className={
+                    location.pathname === tabs.redirectTo
+                      ? style.activeTab
+                      : style.tabs
+                  }
                   key={index}
                 >
                   <div className={style.tabs}> {tabs.name}</div>

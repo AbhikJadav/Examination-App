@@ -23,36 +23,10 @@ $font-family-semi-bold: "OpenSans-Semi-Bold";
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.24) 1px 3px 8px;
     width: 23%;
-    .userTypeWrapper {
-      height: 100px;
-      padding-top: 30px;
-      font-size: 20px;
-      font-family: $font-family-medium;
-      color: #8d4232;
-      .headingContainer {
-        margin-bottom: 15px;
-      }
-
-      .radioBtnContainer {
-        display: flex;
-        justify-content: space-evenly;
-      }
-    }
-
-    hr {
-      color: #8d4232;
-      width: 80%;
-    }
 
     .formContainer {
-      margin-top: 10px;
+      margin-top: 30px;
       padding-bottom: 50px;
-      :global(.ant-form-vertical .ant-form-item-row) {
-        //display: flex;
-        //justify-content: center;
-        //align-items: center;
-        //text-align: center;
-      }
 
       :global(.ant-btn-primary) {
         margin-top: 10px;

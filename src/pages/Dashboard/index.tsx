@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-import Button from "src/components/Button";
+import Button from "src/components/Button/CustomButton";
 import { logOutUser } from "src/store/actions/auth";
 import { useStoreActions } from "src/store/hooks";
 

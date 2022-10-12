@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-import Button from "src/components/Button";
+import Button from "src/components/Button/CustomButton";
 import { useReducerData } from "src/store/hooks";
 
 const Home = () => {

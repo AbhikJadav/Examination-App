@@ -1,7 +1,7 @@
-// import SignIn from "src/pages/Auth/SignIn";
 import Dashboard from "src/pages/Dashboard";
 import Home from "src/pages/Home";
 import Login from "./pages/Auth/Login";
+import SignUp from "./pages/Auth/SignUp/SignUp";
 
 const routes = [
   {
@@ -11,17 +11,17 @@ const routes = [
     isPrivate: false,
     layout: "public",
   },
-  // {
-  //   path: "/signin",
-  //   name: "SignIn",
-  //   component: SignIn,
-  //   isPrivate: false,
-  //   layout: "auth",
-  // },
   {
     path: "/login",
     name: "LogIn",
     component: Login,
+    isPrivate: false,
+    layout: "auth",
+  },
+  {
+    path: "/sign-up",
+    name: "Sign-Up",
+    component: SignUp,
     isPrivate: false,
     layout: "auth",
   },
