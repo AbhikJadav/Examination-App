@@ -5,11 +5,12 @@ import style from "../Input/CustomInput.module.scss";
 const { Option } = Select;
 type DropDownObj = {
   key: number;
-  type: string;
+  label: string;
 };
 type DropDownProps = {
   label?: string;
   name?: string;
+  value?: string;
   rules?: RuleObject[];
   dropDownData: DropDownObj[];
   placeholder?: string;
@@ -19,6 +20,7 @@ const CustomDropDown: React.FC<DropDownProps> = ({
   label,
   name,
   rules,
+  onChange,
   dropDownData,
   placeholder,
 }) => {
@@ -35,6 +37,7 @@ const CustomDropDown: React.FC<DropDownProps> = ({
           style={{ width: "80%", textAlign: "left" }}
           allowClear
           optionFilterProp="children"
+          onChange={onChange}
           // filterOption={(input, option) =>
           //   option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
           // }
@@ -46,8 +49,8 @@ const CustomDropDown: React.FC<DropDownProps> = ({
         >
           {dropDownData?.map((element, index) => {
             return (
-              <Option value={element.key} key={index}>
-                {element.type}
+              <Option value={element.label} key={index}>
+                {element.label}
               </Option>
             );
           })}

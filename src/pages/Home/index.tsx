@@ -7,11 +7,15 @@ import { useReducerData } from "src/store/hooks";
 const Home = () => {
   const navigate = useNavigate();
   const user = useReducerData("auth", "user", {});
-  // eslint-disable-next-line no-console
-  console.log("user", user);
 
+  /* eslint-disable no-console */
+  console.log("user:", user);
   const handleRedirect = () => {
+    // if (user) {
+    //   navigate("/user-profile");
+    // } else {
     navigate("/login");
+    // }
   };
   return (
     <div>

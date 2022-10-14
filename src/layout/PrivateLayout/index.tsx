@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../AuthLayout/Header";
 
 interface Props {
   children: React.ReactNode;
@@ -7,7 +8,8 @@ interface Props {
 const PrivateLayout: React.FC<Props> = ({ children }) => {
   return (
     <div>
-      <p>Private Layout</p>
+      <Header />
+      {/*<p>Private Layout</p>*/}
       {children}
     </div>
   );

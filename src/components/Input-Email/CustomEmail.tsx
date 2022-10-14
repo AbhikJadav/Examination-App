@@ -6,6 +6,7 @@ import style from "../Input/CustomInput.module.scss";
 type EmailProps = {
   label?: string;
   name?: string;
+  value?: string;
   rules?: RuleObject[];
   placeholder: string;
 } & InputHTMLAttributes<HTMLInputElement>;
@@ -13,6 +14,8 @@ type EmailProps = {
 const CustomEmail: React.FC<EmailProps> = ({
   label,
   name,
+  value,
+  onChange,
   rules,
   placeholder,
 }) => {
@@ -24,7 +27,13 @@ const CustomEmail: React.FC<EmailProps> = ({
         rules={rules}
         className={style.inputWrapper}
       >
-        <Input placeholder={placeholder} allowClear />
+        <Input
+          name={name}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          allowClear
+        />
       </Form.Item>
     </div>
   );

@@ -1,10 +1,32 @@
 import React from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { logOutUser } from "src/store/actions/auth";
+import { useReducerData, useStoreActions } from "src/store/hooks";
 import style from "./Header.module.scss";
-import { tabs } from "./tabs";
+import { loginTabs, tabs } from "./tabs";
+
+interface TtabArry {
+  key: number;
+  name: string;
+  redirectTo: string;
+}
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const user = useReducerData("auth", "user", "");
+  const action = useStoreActions({ logOutUser });
+  const tabsArray = user ? loginTabs : tabs;
+  const handleLogout = async (tabs: TtabArry) => {
+    if (tabs.name === "LOGOUT")
+      if (user) {
+        navigate("/login");
+        await action.logOutUser();
+        // logOutUser
+      }
+    /* eslint-disable no-console */
+    // console.log("tabs:", tabs);
+  };
   return (
     <div>
       <div className={style.headerContainer}>
@@ -12,7 +34,7 @@ const Header = () => {
           <div>Home</div>
         </div>
         <div className={style.tabsContainer}>
-          {tabs.map((tabs, index) => {
+          {tabsArray.map((tabs, index) => {
             return (
               <>
                 <NavLink
@@ -23,6 +45,7 @@ const Header = () => {
                       : style.tabs
                   }
                   key={index}
+                  onClick={() => handleLogout(tabs)}
                 >
                   <div className={style.tabs}> {tabs.name}</div>
                 </NavLink>

@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import CustomButton from "src/components/Button/CustomButton";
 import CustomPassword from "src/components/Input-Password/CustomPassword";
 import CustomInput from "src/components/Input/CustomInput";
+import { setUser } from "src/store/actions/auth";
+import { useReducerData, useStoreActions } from "src/store/hooks";
 import style from "./Login.module.scss";
 
 // type user = {
@@ -20,7 +22,7 @@ const Login: React.FC = () => {
   };
   const [authData, setAuthData] = useState({
     user_id: "",
-    // password: "",
+    password: "",
   });
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,8 +31,13 @@ const Login: React.FC = () => {
       [name]: value,
     });
   };
-  const handleSubmit = () => {
-    alert(authData.user_id);
+
+  const userData = useReducerData("auth", "user", "");
+  const action = useStoreActions({ setUser });
+  const handleSubmit = async () => {
+    /* eslint-disable no-console */
+    await action.setUser(authData);
+    console.log("authdata:", authData, userData);
   };
 
   return (
@@ -78,6 +85,8 @@ const Login: React.FC = () => {
             <CustomPassword
               label={"Password"}
               name={"password"}
+              value={authData.password}
+              onChange={handleChange}
               rules={[
                 { required: true, message: "Please input your password!" },
               ]}

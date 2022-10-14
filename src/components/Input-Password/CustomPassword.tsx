@@ -13,6 +13,8 @@ type PasswordProps = {
 const CustomPassword: React.FC<PasswordProps> = ({
   label,
   name,
+  value,
+  onChange,
   rules,
   placeholder,
 }) => {
@@ -24,7 +26,13 @@ const CustomPassword: React.FC<PasswordProps> = ({
         rules={rules}
         className={style.inputWrapper}
       >
-        <Input.Password placeholder={placeholder} allowClear />
+        <Input.Password
+          placeholder={placeholder}
+          name={name}
+          value={value}
+          onChange={onChange}
+          allowClear
+        />
       </Form.Item>
     </div>
   );

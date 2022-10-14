@@ -1,0 +1,57 @@
+$font-family-bold: "OpenSans-Bold";
+$font-family-extra-bold: "OpenSans-Extra-Bold";
+$font-family-light: "OpenSans-Light";
+$font-family-medium: "OpenSans-Medium";
+$font-family-regular: "OpenSans-Regular";
+$font-family-semi-bold: "OpenSans-Semi-Bold";
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 900px;
+  .containerWrapper {
+    box-shadow: rgba(0, 0, 0, 0.35) 1px 5px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    .iconWrapper {
+      margin-top: 10px;
+      height: 510px;
+      img {
+        width: 80%;
+      }
+    }
+    .detailWrapper {
+      color: #8d4232;
+      font-size: 16px;
+      padding: 10px;
+      hr {
+        //width: 80%;
+      }
+      .fieldWrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        padding: 5px;
+        .fieldTitle {
+          font-family: $font-family-bold;
+        }
+        .fieldDetail {
+          font-family: $font-family-medium;
+        }
+      }
+      :global(.ant-btn-primary) {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 18px;
+        font-family: $font-family-medium;
+        width: 100%;
+        height: 40px;
+        margin-bottom: 10px;
+        &:hover {
+          filter: blur(0.5px);
+        }
+      }
+    }
+  }
+}
