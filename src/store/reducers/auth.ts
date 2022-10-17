@@ -11,7 +11,6 @@ const initialState = {
 
 const AuthReducer: Reducer = (state = initialState, action) => {
   const { type, payload } = action;
-
   /* eslint-disable no-console */
 
   // debugger; // eslint-disable-line no-debugger
@@ -34,16 +33,19 @@ const AuthReducer: Reducer = (state = initialState, action) => {
         }),
         failure: (prevState) => ({ ...prevState }),
       });
-    case Types.SIGNUP_SUCCESS:
-      // const teampData = state.userData.push(payload?.user_data);
+    case Types.SIGNUP_SUCCESS: {
+      /* eslint-disable no-console */
+
+      const newArray = [...state.userData, payload?.user_data];
       return handleData(state, action, {
         request: (prevState) => ({ ...prevState }),
         success: (prevState) => ({
           ...prevState,
-          userData: state.userData.push(payload?.user_data),
+          userData: newArray,
         }),
         failure: (prevState) => ({ ...prevState }),
       });
+    }
     case Types.LOG_OUT_USER: {
       return {
         ...state,
