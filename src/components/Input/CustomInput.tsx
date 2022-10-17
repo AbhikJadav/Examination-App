@@ -1,38 +1,29 @@
-import { Form, Input } from "antd";
+import { Form, Input, InputProps } from "antd";
+// import { InputProps } from "antd/lib/Input/style";
 import { RuleObject } from "antd/lib/form";
-import React, { InputHTMLAttributes } from "react";
+import React from "react";
 import style from "./CustomInput.module.scss";
-type InputProps = {
+type CustomInputProps = {
+  formName?: string;
   label?: string;
-  name?: string;
   rules?: RuleObject[];
-  placeholder: string;
-} & InputHTMLAttributes<HTMLInputElement>;
+} & InputProps;
 
-const CustomInput: React.FC<InputProps> = ({
+const CustomInput: React.FC<CustomInputProps> = ({
   label,
-  name,
-  value,
+  formName,
   rules,
-  placeholder,
-  onChange,
+  ...rest
 }) => {
   return (
     <div>
       <Form.Item
         className={style.inputWrapper}
         label={label}
-        name={name}
+        name={formName}
         rules={rules}
       >
-        <Input
-          type="text"
-          name={name}
-          value={value}
-          placeholder={placeholder}
-          onChange={onChange}
-          allowClear
-        />
+        <Input allowClear {...rest} />
       </Form.Item>
     </div>
   );

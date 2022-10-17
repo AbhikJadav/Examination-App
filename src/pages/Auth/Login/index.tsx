@@ -95,7 +95,7 @@ const Login: React.FC = () => {
           >
             <CustomInput
               label="Student_No / Student_id"
-              name="user_id"
+              formName={"user_id"}
               value={authData.user_id}
               placeholder="User_id"
               rules={[
