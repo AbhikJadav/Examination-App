@@ -1,0 +1,45 @@
+$font-family-bold: "OpenSans-Bold";
+$font-family-extra-bold: "OpenSans-Extra-Bold";
+$font-family-light: "OpenSans-Light";
+$font-family-medium: "OpenSans-Medium";
+$font-family-regular: "OpenSans-Regular";
+$font-family-semi-bold: "OpenSans-Semi-Bold";
+
+.mainContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .authHeader {
+    padding-top: 30px;
+    font-size: 40px;
+    font-family: $font-family-regular;
+    color: #d07764;
+  }
+  .boxContainer {
+    margin-top: -30px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.24) 1px 3px 8px;
+    width: 23%;
+
+    .formContainer {
+      margin-top: 30px;
+      padding-bottom: 50px;
+
+      :global(.ant-btn-primary) {
+        margin-top: 10px;
+        text-align: center;
+        font-size: 18px;
+        font-family: $font-family-medium;
+        width: 80%;
+        height: 40px;
+        margin-bottom: 10px;
+        &:hover {
+          filter: blur(0.5px);
+        }
+      }
+    }
+  }
+}

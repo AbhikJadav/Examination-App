@@ -1,17 +1,21 @@
 import React from "react";
 import { useNavigate } from "react-router";
 
-import Button from "src/components/Button";
+import Button from "src/components/Button/CustomButton";
 import { useReducerData } from "src/store/hooks";
 
 const Home = () => {
   const navigate = useNavigate();
   const user = useReducerData("auth", "user", {});
-  // eslint-disable-next-line no-console
-  console.log("user", user);
 
+  /* eslint-disable no-console */
+  console.log("user:", user);
   const handleRedirect = () => {
-    navigate("/signin");
+    // if (user) {
+    //   navigate("/user-profile");
+    // } else {
+    navigate("/login");
+    // }
   };
   return (
     <div>

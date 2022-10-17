@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
 
-import Button from "src/components/Button";
-import Input from "src/components/Input";
+import Button from "src/components/Button/CustomButton";
+import Input from "src/components/Input/CustomInput";
 import { setUser } from "src/store/actions/auth";
 import { useStoreActions } from "src/store/hooks";
 

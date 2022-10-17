@@ -1,0 +1,31 @@
+$font-family-bold: "OpenSans-Bold";
+$font-family-extra-bold: "OpenSans-Extra-Bold";
+$font-family-light: "OpenSans-Light";
+$font-family-medium: "OpenSans-Medium";
+$font-family-regular: "OpenSans-Regular";
+$font-family-semi-bold: "OpenSans-Semi-Bold";
+
+.inputWrapper {
+  :global(.ant-form-item-label label) {
+    font-family: $font-family-regular;
+    font-size: 16px;
+    color: #8d4232;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  :global(.ant-form-item-explain-error) {
+    text-align: center;
+  }
+
+  :global(.ant-picker-range) {
+    height: 40px;
+    width: 80%;
+    border-radius: 5px;
+  }
+  :global(.ant-input-affix-wrapper) {
+  }
+  :global(.ant-form-item-label label.ant-form-item-required:before) {
+    content: unset;
+  }
+}
