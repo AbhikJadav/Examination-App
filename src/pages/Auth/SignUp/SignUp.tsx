@@ -1,7 +1,8 @@
-import { Form } from "antd";
+import { Form, notification } from "antd";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "src/components/Button/CustomButton";
-import CustomDatePicker from "src/components/DatePicker/CustomDatePicker";
+// import CustomDatePicker from "src/components/DatePicker/CustomDatePicker";
 import CustomDropDown from "src/components/DropDown/CustomDropDown";
 import CustomEmail from "src/components/Input-Email/CustomEmail";
 import CustomPassword from "src/components/Input-Password/CustomPassword";
@@ -14,21 +15,25 @@ import {
   UserTypeDropDownData,
 } from "./DropDownData";
 import style from "./SignUp.module.scss";
+import { SignupData } from "./Type";
 
 const SignUp: React.FC = () => {
   const [form] = Form.useForm();
-  const [userData, setUserData] = useState({
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const initialValue = {
     user_type: "",
     name: "",
-    admission: "",
+    admission: 0,
     email: "",
-    batch: "",
+    batch: new Date(),
     mobileNo: 0,
     branch: "",
     semester: "",
     password: "",
     confirmPassword: "",
-  });
+  };
+  const [userData, setUserData] = useState(initialValue);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUserData({
@@ -36,7 +41,13 @@ const SignUp: React.FC = () => {
       [name]: value,
     });
   };
-  const userAuthData = useReducerData("auth", "userData", "");
+  // const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   setUserData({
+  //     ...userData,
+  //     [name]: value,
+  //   });
+  // };
 
   const userDropDownChange = async (
     value: string & React.ChangeEvent<HTMLInputElement>
@@ -57,26 +68,37 @@ const SignUp: React.FC = () => {
   };
 
   const action = useStoreActions({ setUserType, doSignUp });
+  const signupData = useReducerData("auth", "signupData", "");
   const onSubmit = async () => {
-    await action.setUserType(userData.user_type);
-    await action.doSignUp(userData);
-
-    setUserData({
-      user_type: "",
-      name: "",
-      admission: "",
-      email: "",
-      batch: "",
-      mobileNo: 0,
-      branch: "",
-      semester: "",
-      password: "",
-      confirmPassword: "",
+    const findData = signupData?.find((elements: SignupData) => {
+      return (
+        elements.user_type === userData.user_type &&
+        elements.email === userData.email &&
+        elements.password === userData.password
+      );
     });
-    form.resetFields();
+    if (!findData) {
+      setLoading(true);
+      const uniqId = new Date().getTime();
+      const payload = { ...userData, admission: uniqId };
+      await action.setUserType(userData.user_type);
+      await action.doSignUp(payload);
+
+      setUserData(initialValue);
+      setLoading(false);
+      navigate("/login");
+      form.resetFields();
+    } else {
+      setLoading(true);
+      notification["error"]({
+        message: "This User Is Already Exists",
+      });
+      setUserData(initialValue);
+      setLoading(false);
+      form.resetFields();
+    }
   };
   /* eslint-disable no-console */
-  console.log("userAuthData:", userAuthData);
 
   return (
     <div className={style.mainContainer}>
@@ -93,16 +115,16 @@ const SignUp: React.FC = () => {
             autoComplete="off"
             form={form}
           >
-            <CustomInput
-              label="User_No / User_id"
-              name="user_id"
-              // value={authData.user_id}
-              placeholder="User_id"
-              rules={[
-                { required: true, message: "Please input your User Id!" },
-              ]}
-              // onChange={handleChange}
-            />
+            {/*<CustomInput*/}
+            {/*  label="User_No / User_id"*/}
+            {/*  name="user_id"*/}
+            {/*  // value={authData.user_id}*/}
+            {/*  placeholder="User_id"*/}
+            {/*  rules={[*/}
+            {/*    { required: true, message: "Please input your User Id!" },*/}
+            {/*  ]}*/}
+            {/*  // onChange={handleChange}*/}
+            {/*/>*/}
 
             <CustomDropDown
               name="user_type"
@@ -171,28 +193,33 @@ const SignUp: React.FC = () => {
                 {/*  <RangePicker picker="year" />*/}
                 {/*</Form.Item>*/}
 
-                <CustomDatePicker
-                  label={"Batch Year"}
-                  name={"batch"}
-                  rules={[
-                    { required: true, message: "Please input your Mobile No!" },
-                  ]}
-                  placeholder={""}
-                />
+                {/*<CustomDatePicker*/}
+                {/*  label={"Batch Year"}*/}
+                {/*  name={"batch"}*/}
+                {/*  value={userData.batch}*/}
+                {/*  onChange={handleDateChange}*/}
+                {/*  rules={[*/}
+                {/*    {*/}
+                {/*      required: true,*/}
+                {/*      message: "Please Select the Batch Year!",*/}
+                {/*    },*/}
+                {/*  ]}*/}
+                {/*  // placeholder={""}*/}
+                {/*/>*/}
 
-                <CustomInput
-                  label="Batch"
-                  name="batch"
-                  value={userData.batch}
-                  placeholder="Batch Year"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your Batch Year!",
-                    },
-                  ]}
-                  onChange={handleChange}
-                />
+                {/*<CustomInput*/}
+                {/*  label="Batch"*/}
+                {/*  name="batch"*/}
+                {/*  value={userData.batch}*/}
+                {/*  placeholder="Batch Year"*/}
+                {/*  rules={[*/}
+                {/*    {*/}
+                {/*      required: true,*/}
+                {/*      message: "Please input your Batch Year!",*/}
+                {/*    },*/}
+                {/*  ]}*/}
+                {/*  onChange={handleChange}*/}
+                {/*/>*/}
 
                 <CustomDropDown
                   name="branch"
@@ -273,6 +300,7 @@ const SignUp: React.FC = () => {
               buttonText={"SUBMIT"}
               type={"primary"}
               htmlType="submit"
+              loading={loading}
             />
           </Form>
         </div>

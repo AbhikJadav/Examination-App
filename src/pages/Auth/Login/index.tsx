@@ -1,29 +1,29 @@
 import type { RadioChangeEvent } from "antd";
-import { Form, Radio } from "antd";
+import { Form, Radio, notification } from "antd";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import CustomButton from "src/components/Button/CustomButton";
 import CustomPassword from "src/components/Input-Password/CustomPassword";
 import CustomInput from "src/components/Input/CustomInput";
 import { setUser } from "src/store/actions/auth";
 import { useReducerData, useStoreActions } from "src/store/hooks";
+import { SignupData } from "../SignUp/Type";
 import style from "./Login.module.scss";
 
-// type user = {
-//   val?: number;
-// };
-
 const Login: React.FC = () => {
-  // const initUser: user = {
-  //   val: 1,
-  // };
+  const [form] = Form.useForm();
+  const navigate = useNavigate();
   const [selectUser, setSelectUser] = useState(1);
+  const [loading, setLoading] = useState(false);
+
   const handleSelectUser = (e: RadioChangeEvent) => {
     setSelectUser(e.target.value);
   };
-  const [authData, setAuthData] = useState({
-    user_id: "",
+  const initialValue = {
+    user_id: 0,
     password: "",
-  });
+  };
+  const [authData, setAuthData] = useState(initialValue);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setAuthData({
@@ -32,14 +32,37 @@ const Login: React.FC = () => {
     });
   };
 
-  const userData = useReducerData("auth", "user", "");
+  const signupData = useReducerData("auth", "signupData", "");
   const action = useStoreActions({ setUser });
   const handleSubmit = async () => {
     /* eslint-disable no-console */
-    await action.setUser(authData);
-    console.log("authdata:", authData, userData);
-  };
+    const findData = signupData?.find((elements: SignupData) => {
+      return (
+        elements.admission === +authData.user_id &&
+        elements.password === authData.password
+      );
+    });
 
+    if (findData) {
+      setLoading(true);
+      await action.setUser(authData);
+      localStorage.setItem("userData", JSON.stringify(findData));
+      setAuthData(initialValue);
+      form.resetFields();
+      setLoading(false);
+      navigate("/user-profile");
+    } else {
+      setLoading(true);
+      notification["error"]({
+        message: "This User Is Not Exists",
+      });
+      setAuthData(initialValue);
+      setLoading(false);
+      form.resetFields();
+    }
+  };
+  /* eslint-disable no-console */
+  console.log("signupData:", signupData);
   return (
     <div className={style.mainContainer}>
       <div className={style.authHeader}>
@@ -67,9 +90,8 @@ const Login: React.FC = () => {
             onFinish={handleSubmit}
             layout="vertical"
             initialValues={{ remember: true }}
-            // onFinish={onFinish}
-            // onFinishFailed={onFinishFailed}
             autoComplete="off"
+            form={form}
           >
             <CustomInput
               label="Student_No / Student_id"
@@ -97,6 +119,7 @@ const Login: React.FC = () => {
               buttonText={"SUBMIT"}
               type={"primary"}
               htmlType="submit"
+              loading={loading}
             />
 
             <CustomButton buttonText={"FORGOT PASSWORD"} type={"primary"} />

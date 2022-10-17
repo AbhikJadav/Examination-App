@@ -1,22 +1,11 @@
 import { Dispatch } from "redux";
 
+import { SignupData } from "src/pages/Auth/SignUp/Type";
 import Types from "../types/auth";
 
 interface User {
   email?: string;
   password?: string;
-}
-interface UserData {
-  user_type?: string;
-  name?: string;
-  admission?: string;
-  email?: string;
-  batch?: string;
-  mobileNo?: number;
-  branch?: string;
-  semester?: string;
-  password?: string;
-  confirmPassword?: string;
 }
 
 export const setUser = (user: User) => (dispatch: Dispatch) => {
@@ -45,13 +34,13 @@ export const setUserType = (user_type: string) => (dispatch: Dispatch) => {
   });
 };
 
-export const doSignUp = (user_data: UserData) => (dispatch: Dispatch) => {
+export const doSignUp = (signup_data: SignupData) => (dispatch: Dispatch) => {
   dispatch({
-    payload: user_data,
+    payload: signup_data,
     type: Types.SIGNUP_SUCCESS,
     asyncCall: () => {
       return new Promise((resolve) => {
-        resolve({ status: 1, user_data });
+        resolve({ status: 1, signup_data });
       });
     },
     onSuccess: () => {},

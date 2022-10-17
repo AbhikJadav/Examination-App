@@ -6,7 +6,7 @@ import Types from "../types/auth";
 const initialState = {
   userType: "",
   user: null,
-  userData: [],
+  signupData: [],
 };
 
 const AuthReducer: Reducer = (state = initialState, action) => {
@@ -36,12 +36,12 @@ const AuthReducer: Reducer = (state = initialState, action) => {
     case Types.SIGNUP_SUCCESS: {
       /* eslint-disable no-console */
 
-      const newArray = [...state.userData, payload?.user_data];
+      const newArray = [...state.signupData, payload?.signup_data];
       return handleData(state, action, {
         request: (prevState) => ({ ...prevState }),
         success: (prevState) => ({
           ...prevState,
-          userData: newArray,
+          signupData: newArray,
         }),
         failure: (prevState) => ({ ...prevState }),
       });

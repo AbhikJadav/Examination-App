@@ -16,8 +16,17 @@ $font-family-semi-bold: "OpenSans-Semi-Bold";
     align-items: center;
     padding: 50px;
     .iconWrapper {
-      margin-top: 10px;
+      //margin-top: 10px;
+
+      padding-top: 57px;
       height: 510px;
+      img {
+        width: 80%;
+      }
+    }
+    .iconWrapper1 {
+      height: 510px;
+      padding-top: 10px;
       img {
         width: 80%;
       }

@@ -21,6 +21,7 @@ const Header = () => {
     if (tabs.name === "LOGOUT")
       if (user) {
         navigate("/login");
+        localStorage.removeItem("userData");
         await action.logOutUser();
         // logOutUser
       }
