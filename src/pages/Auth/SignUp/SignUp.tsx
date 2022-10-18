@@ -1,12 +1,14 @@
 import { Form, notification } from "antd";
+import { RangePickerProps } from "antd/lib/date-picker";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CustomButton from "src/components/Button/CustomButton";
-// import CustomDatePicker from "src/components/DatePicker/CustomDatePicker";
+import CustomDatePicker from "src/components/DatePicker/CustomDatePicker";
 import CustomDropDown from "src/components/DropDown/CustomDropDown";
 import CustomEmail from "src/components/Input-Email/CustomEmail";
 import CustomPassword from "src/components/Input-Password/CustomPassword";
 import CustomInput from "src/components/Input/CustomInput";
+import { validatePassword } from "src/helpers/constant";
 import { doSignUp, setUserType } from "src/store/actions/auth";
 import { useReducerData, useStoreActions } from "src/store/hooks";
 import {
@@ -16,6 +18,7 @@ import {
 } from "./DropDownData";
 import style from "./SignUp.module.scss";
 import { SignupData } from "./Type";
+// eslint-disable-next-line no-use-before-define
 
 const SignUp: React.FC = () => {
   const [form] = Form.useForm();
@@ -26,7 +29,7 @@ const SignUp: React.FC = () => {
     name: "",
     admission: 0,
     email: "",
-    batch: new Date(),
+    batch: "",
     mobileNo: 0,
     branch: "",
     semester: "",
@@ -41,11 +44,12 @@ const SignUp: React.FC = () => {
       [name]: value,
     });
   };
-  // const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
+  // const handleDateChange = (
+  //   value: string & React.ChangeEvent<HTMLInputElement>
+  // ) => {
   //   setUserData({
   //     ...userData,
-  //     [name]: value,
+  //     batch: value,
   //   });
   // };
 
@@ -99,7 +103,12 @@ const SignUp: React.FC = () => {
     }
   };
   /* eslint-disable no-console */
-
+  const rangeOnChange: RangePickerProps["onChange"] = (dates, dateStrings) => {
+    // console.log("from: ", dates[0], ", to: ", dates[1]);
+    const batchYear = dateStrings[0] + "-" + dateStrings[1];
+    setUserData({ ...userData, batch: batchYear });
+    // console.log("from: ", );
+  };
   return (
     <div className={style.mainContainer}>
       <div className={style.authHeader}>
@@ -115,17 +124,6 @@ const SignUp: React.FC = () => {
             autoComplete="off"
             form={form}
           >
-            {/*<CustomInput*/}
-            {/*  label="User_No / User_id"*/}
-            {/*  name="user_id"*/}
-            {/*  // value={authData.user_id}*/}
-            {/*  placeholder="User_id"*/}
-            {/*  rules={[*/}
-            {/*    { required: true, message: "Please input your User Id!" },*/}
-            {/*  ]}*/}
-            {/*  // onChange={handleChange}*/}
-            {/*/>*/}
-
             <CustomDropDown
               name="user_type"
               value={userData.user_type}
@@ -138,7 +136,7 @@ const SignUp: React.FC = () => {
 
             <CustomInput
               label="Full Name"
-              name="name"
+              formName="name"
               value={userData.name}
               placeholder="Full Name"
               rules={[{ required: true, message: "Please input User Name!" }]}
@@ -165,7 +163,7 @@ const SignUp: React.FC = () => {
 
             <CustomInput
               label="Mobile No"
-              name="mobileNo"
+              formName="mobileNo"
               value={userData.mobileNo}
               placeholder="Mobile No"
               rules={[
@@ -182,30 +180,18 @@ const SignUp: React.FC = () => {
 
             {userData.user_type === "Student" && (
               <>
-                {/*<Form.Item*/}
-                {/*  className={style.inputWrapper}*/}
-                {/*  label={"Batch"}*/}
-                {/*  name={"batch"}*/}
-                {/*  rules={[*/}
-                {/*    { required: true, message: "Please input your Mobile No!" },*/}
-                {/*  ]}*/}
-                {/*>*/}
-                {/*  <RangePicker picker="year" />*/}
-                {/*</Form.Item>*/}
-
-                {/*<CustomDatePicker*/}
-                {/*  label={"Batch Year"}*/}
-                {/*  name={"batch"}*/}
-                {/*  value={userData.batch}*/}
-                {/*  onChange={handleDateChange}*/}
-                {/*  rules={[*/}
-                {/*    {*/}
-                {/*      required: true,*/}
-                {/*      message: "Please Select the Batch Year!",*/}
-                {/*    },*/}
-                {/*  ]}*/}
-                {/*  // placeholder={""}*/}
-                {/*/>*/}
+                <CustomDatePicker
+                  label={"Batch Year"}
+                  name={"batch"}
+                  // value={userData.batch}
+                  onChange={rangeOnChange}
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please Select the Batch Year!",
+                    },
+                  ]}
+                />
 
                 {/*<CustomInput*/}
                 {/*  label="Batch"*/}
@@ -251,37 +237,24 @@ const SignUp: React.FC = () => {
               value={userData.password}
               onChange={handleChange}
               rules={[
-                { required: true, message: "Please input your password!" },
+                ({ getFieldValue }) => ({
+                  validator() {
+                    if (!validatePassword(getFieldValue("password"))) {
+                      if (!getFieldValue("password")) {
+                        return Promise.reject(
+                          new Error("Please enter password")
+                        );
+                      }
+                      return Promise.reject(
+                        new Error("Please enter strong password")
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                }),
               ]}
               placeholder="Please Enter 6-10 Digit Password"
             />
-
-            {/*<Form.Item*/}
-            {/*  name="confirm"*/}
-            {/*  label="Confirm Password"*/}
-            {/*  dependencies={["password"]}*/}
-            {/*  hasFeedback*/}
-            {/*  rules={[*/}
-            {/*    {*/}
-            {/*      required: true,*/}
-            {/*      message: "Please confirm your password!",*/}
-            {/*    },*/}
-            {/*    ({ getFieldValue }) => ({*/}
-            {/*      validator(_, value) {*/}
-            {/*        if (!value || getFieldValue("password") === value) {*/}
-            {/*          return Promise.resolve();*/}
-            {/*        }*/}
-            {/*        return Promise.reject(*/}
-            {/*          new Error(*/}
-            {/*            "The two passwords that you entered do not match!"*/}
-            {/*          )*/}
-            {/*        );*/}
-            {/*      },*/}
-            {/*    }),*/}
-            {/*  ]}*/}
-            {/*>*/}
-            {/*  <Input.Password />*/}
-            {/*</Form.Item>*/}
 
             <CustomPassword
               label={"Confirm Password"}
@@ -291,8 +264,18 @@ const SignUp: React.FC = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your confirm password!",
+                  message: "Please enter confirm password",
                 },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      new Error("confirm password does not match with password")
+                    );
+                  },
+                }),
               ]}
               placeholder="Please Enter 6-10 Digit Password"
             />

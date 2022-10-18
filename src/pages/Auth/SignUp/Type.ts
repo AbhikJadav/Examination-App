@@ -3,7 +3,7 @@ export interface SignupData {
   name?: string;
   admission?: number;
   email?: string;
-  batch?: Date;
+  batch?: string;
   mobileNo?: number;
   branch?: string;
   semester?: string;

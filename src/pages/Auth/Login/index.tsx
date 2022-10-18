@@ -122,7 +122,13 @@ const Login: React.FC = () => {
               loading={loading}
             />
 
-            <CustomButton buttonText={"FORGOT PASSWORD"} type={"primary"} />
+            <CustomButton
+              buttonText={"FORGOT PASSWORD"}
+              type={"primary"}
+              onClick={() => {
+                navigate("/forgot-password");
+              }}
+            />
           </Form>
         </div>
       </div>

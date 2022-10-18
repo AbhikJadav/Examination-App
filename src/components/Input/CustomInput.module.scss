@@ -15,7 +15,8 @@ $font-family-semi-bold: "OpenSans-Semi-Bold";
     align-items: center;
   }
   :global(.ant-form-item-explain-error) {
-    text-align: center;
+    text-align: left;
+    padding-left: 45px;
   }
   :global(.ant-input-affix-wrapper) {
     height: 40px;

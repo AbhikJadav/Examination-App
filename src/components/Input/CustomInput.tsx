@@ -23,7 +23,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         name={formName}
         rules={rules}
       >
-        <Input allowClear {...rest} />
+        <Input name={formName} allowClear {...rest} />
       </Form.Item>
     </div>
   );
