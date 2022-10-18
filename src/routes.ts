@@ -1,6 +1,6 @@
 import Dashboard from "src/pages/Dashboard";
 import Home from "src/pages/Home";
-import forgotPassword from "./pages/Auth/Forgot-Password";
+import ForgotPassword from "./pages/Auth/Forgot-Password";
 import Login from "./pages/Auth/Login";
 import SignUp from "./pages/Auth/SignUp/SignUp";
 import UserProfile from "./pages/User-Profile";
@@ -30,7 +30,7 @@ const routes = [
   {
     path: "/forgot-password",
     name: "Forgot-password",
-    component: forgotPassword,
+    component: ForgotPassword,
     isPrivate: false,
     layout: "auth",
   },
